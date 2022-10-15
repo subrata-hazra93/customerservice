@@ -1,0 +1,56 @@
+plugins {
+    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("io.micronaut.application") version "3.6.0"
+}
+
+version = "0.1"
+group = "com.psl"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    annotationProcessor("org.projectlombok:lombok")
+    annotationProcessor("io.micronaut:micronaut-http-validation")
+    annotationProcessor("io.micronaut.openapi:micronaut-openapi")
+    annotationProcessor ("javax.persistence:javax.persistence-api:2.2")
+    implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut:micronaut-jackson-databind")
+    implementation("io.swagger.core.v3:swagger-annotations")
+    implementation("jakarta.annotation:jakarta.annotation-api")
+    implementation("io.micronaut:micronaut-management")
+    compileOnly("org.projectlombok:lombok")
+    runtimeOnly("ch.qos.logback:logback-classic")
+    runtimeOnly("org.postgresql:postgresql")
+    implementation 'org.postgresql:postgresql:42.2.26'
+    implementation("io.micronaut:micronaut-validation")
+    implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
+    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
+    annotationProcessor ("io.micronaut:micronaut-inject-java")
+    implementation ('com.google.code.gson:gson:2.9.0')
+    implementation ('org.modelmapper:modelmapper:3.1.0')
+    testImplementation group: 'io.micronaut.test', name: 'micronaut-test-junit5'
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter'
+}
+
+application {
+    mainClass.set("com.psl.Application")
+}
+java {
+    sourceCompatibility = JavaVersion.toVersion("11")
+    targetCompatibility = JavaVersion.toVersion("11")
+}
+
+graalvmNative.toolchainDetection = false
+micronaut {
+    runtime("netty")
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("com.psl.*")
+    }
+}
+
+
+
