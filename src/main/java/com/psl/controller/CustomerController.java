@@ -53,7 +53,7 @@ public class CustomerController {
 
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)))})
     @Post(produces = {"application/json"})
-    public HttpResponse<CustomerDetailsDto> createCustomer(@Body CustomerDto customerCreateDto) throws CustomException, JsonProcessingException {
+    public HttpResponse<CustomerDetailsDto> createCustomer(@Body CustomerDto customerCreateDto) throws CustomException {
         logger.info("CustomerController.createCustomer :: Create Customer Object in database {}", customerCreateDto);
         Customer customer = MapCustomerDetails.mapCustomerDTOtoCustomerEntity(customerCreateDto);
         Customer response = customerService.createCustomer(customer);

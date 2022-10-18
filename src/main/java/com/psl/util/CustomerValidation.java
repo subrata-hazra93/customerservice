@@ -3,7 +3,6 @@ package com.psl.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonObject;
 import com.psl.constant.ConstantMessage;
 import com.psl.entity.Customer;
 import com.psl.exception.CustomException;
@@ -41,7 +40,7 @@ public class CustomerValidation {
      * @param request
      * @return Void
      */
-    public static void isAllCustomerDetailsPresent(Customer request) throws JsonProcessingException {
+    public static void isAllCustomerDetailsPresent(Customer request) {
         Map<String, String> errorMap= new LinkedHashMap<>();
         if(StringUtil.isEmpty(request.getAccountNumber())){
             errorMap.put("Account Number",ConstantMessage.REQUIRED_ACCOUNT_NUMBER);
@@ -68,9 +67,7 @@ public class CustomerValidation {
             errorMap.put("Date of Opening",ConstantMessage.REQUIRED_DATE_OF_OPENING);
         }
         if(!errorMap.isEmpty()){
-            ObjectMapper objectMapper = new ObjectMapper();
-            String json = objectMapper.writeValueAsString(errorMap);
-            throw new CustomException(json.replace('\"',' '), HttpStatus.BAD_REQUEST);
+            throw new CustomException(errorMap.toString(), HttpStatus.BAD_REQUEST);
         }
     }
 

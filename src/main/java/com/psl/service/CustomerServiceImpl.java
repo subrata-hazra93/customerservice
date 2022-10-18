@@ -1,6 +1,5 @@
 package com.psl.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.psl.constant.ConstantMessage;
 import com.psl.exception.CustomException;
 import com.psl.repository.CustomerRepository;
@@ -33,7 +32,7 @@ public class CustomerServiceImpl implements CustomerService {
      * @return Customer
      */
     @Override
-    public Customer createCustomer(Customer request) throws CustomException, JsonProcessingException {
+    public Customer createCustomer(Customer request) throws CustomException {
         logger.info("CustomerServiceImpl.createCustomer :: create customer object in database  = {}", request);
         CustomerValidation.isAllCustomerDetailsPresent(request);
         CustomerFieldsValidator.validateCustomerRequestFormat(request);
