@@ -1,4 +1,8 @@
-FROM adoptopenjdk/openjdk13-openj9:jdk-13.0.2_8_openj9-0.18.0-alpine-slim
-COPY build/libs/CustomerService-*-all.jar CustomerService.jar
-EXPOSE 8080
-CMD ["java", "-Dcom.sun.management.jmxremote", "-Xmx512m", "-XX:+IdleTuningGcOnIdle", "-Xtune:virtualized", "-jar", "CustomerService.jar"]
+FROM adoptopenjdk/openjdk11:jdk-11.0.16_8-alpine-slim
+LABEL maintainer=subrata_hazra@persistent.com
+RUN addgroup -S customerservicegroup && adduser -S customerserviceuser -G customerservicegroup
+USER customerserviceuser
+WORKDIR customerservice
+ADD build/libs/customerservice-0.1-all.jar customerservice.jar
+EXPOSE 8082
+ENTRYPOINT ["java", "-jar", "customerservice.jar"]
